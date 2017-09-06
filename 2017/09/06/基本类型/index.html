@@ -86,7 +86,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Kotlin," />
 
 
 
@@ -102,13 +102,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Yun Jiao&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="基本类型显式类型转换Kotlin中所有的东西都是对象。基本类型在Kotlin中也有特殊的内部表示类型，尽管这些类型是引用类型，但使用起来和Java中的基本类型基本类似。不同的是，Kotlin的特点是力求显式，所以不存在Java中自动向上转型这样的特性，所以不同基本类型的变量相互赋值时，仍需要做显式的类型转换。123val m: Int = 1val n: Long = m.toLong()val">
+<meta name="keywords" content="Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本类型">
+<meta property="og:url" content="http://yoursite.com/2017/09/06/基本类型/index.html">
 <meta property="og:site_name" content="Yun Jiao&#39;s Blog">
+<meta property="og:description" content="基本类型显式类型转换Kotlin中所有的东西都是对象。基本类型在Kotlin中也有特殊的内部表示类型，尽管这些类型是引用类型，但使用起来和Java中的基本类型基本类似。不同的是，Kotlin的特点是力求显式，所以不存在Java中自动向上转型这样的特性，所以不同基本类型的变量相互赋值时，仍需要做显式的类型转换。123val m: Int = 1val n: Long = m.toLong()val">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-06T08:28:35.017Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Yun Jiao&#39;s Blog">
+<meta name="twitter:title" content="基本类型">
+<meta name="twitter:description" content="基本类型显式类型转换Kotlin中所有的东西都是对象。基本类型在Kotlin中也有特殊的内部表示类型，尽管这些类型是引用类型，但使用起来和Java中的基本类型基本类似。不同的是，Kotlin的特点是力求显式，所以不存在Java中自动向上转型这样的特性，所以不同基本类型的变量相互赋值时，仍需要做显式的类型转换。123val m: Int = 1val n: Long = m.toLong()val">
 
 
 
@@ -138,13 +143,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/06/基本类型/"/>
 
 
 
 
 
-  <title>Yun Jiao's Blog</title>
+  <title>基本类型 | Yun Jiao's Blog</title>
   
 
 
@@ -163,8 +168,7 @@
     
   
 
-  <div class="container sidebar-position-right 
-  page-home">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/jiaoyun286"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
@@ -268,9 +272,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -300,9 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/06/基本类型/" itemprop="url">基本类型</a></h1>
+          <h1 class="post-title" itemprop="name headline">基本类型</h1>
         
 
         <div class="post-meta">
@@ -367,6 +369,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">热度
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
+            </span>
+          
 
           
 
@@ -385,9 +392,7 @@
       
 
       
-        
-          
-            <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="显式类型转换"><a href="#显式类型转换" class="headerlink" title="显式类型转换"></a>显式类型转换</h3><p>Kotlin中所有的东西都是对象。基本类型在Kotlin中也有特殊的内部表示类型，尽管这些类型是引用类型，但使用起来和Java中的基本类型基本类似。<br>不同的是，Kotlin的特点是力求显式，所以不存在Java中自动向上转型这样的特性，所以不同基本类型的变量相互赋值时，仍需要做显式的类型转换。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> m: <span class="built_in">Int</span> = <span class="number">1</span></div><div class="line"><span class="keyword">val</span> n: <span class="built_in">Long</span> = m.toLong()</div><div class="line"><span class="keyword">val</span> x: <span class="built_in">Int</span> = n.toInt()</div></pre></td></tr></table></figure></p>
+        <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><h3 id="显式类型转换"><a href="#显式类型转换" class="headerlink" title="显式类型转换"></a>显式类型转换</h3><p>Kotlin中所有的东西都是对象。基本类型在Kotlin中也有特殊的内部表示类型，尽管这些类型是引用类型，但使用起来和Java中的基本类型基本类似。<br>不同的是，Kotlin的特点是力求显式，所以不存在Java中自动向上转型这样的特性，所以不同基本类型的变量相互赋值时，仍需要做显式的类型转换。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> m: <span class="built_in">Int</span> = <span class="number">1</span></div><div class="line"><span class="keyword">val</span> n: <span class="built_in">Long</span> = m.toLong()</div><div class="line"><span class="keyword">val</span> x: <span class="built_in">Int</span> = n.toInt()</div></pre></td></tr></table></figure></p>
 <h3 id="字符类型"><a href="#字符类型" class="headerlink" title="字符类型"></a>字符类型</h3><p>字符类型用用<code>Char</code>表示。它不能像Java中一样直接当作数字，需要显式的转换为数字<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">check</span><span class="params">(c: <span class="type">Char</span>)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(c.toInt() == <span class="number">1</span>)&#123;</div><div class="line">       <span class="comment">//dosome thing</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p><strong>三种创建方式：</strong></p>
 <ol>
@@ -398,8 +403,6 @@
 </ol>
 <h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><p>字符串最重要的特性就是字符串模板<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> 字符串模板<span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">val</span> q = <span class="string">"***"</span></div><div class="line">    <span class="keyword">val</span> str = <span class="string">"字符串模板测试<span class="variable">$q</span>"</span> +<span class="string">"&amp;&amp;&amp;---"</span> + <span class="string">"<span class="subst">$&#123;a + b&#125;</span>"</span><span class="comment">// 这里$q就是字符串模板，运行时会被替换为q的字面值,若是表达式要用&#123;&#125;包裹起来</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> unit = <span class="string">"$"</span></div><div class="line">    <span class="keyword">val</span> price = <span class="string">"<span class="variable">$unit</span> 99.99"</span> <span class="comment">//字符串模板若不带大括号后面要有空格或其他特殊字符</span></div><div class="line">    <span class="keyword">val</span> price1 = <span class="string">"<span class="subst">$&#123;<span class="string">'$'</span>&#125;</span>999.99"</span></div><div class="line"></div><div class="line">    println(price1)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
-          
-        
       
     </div>
     
@@ -413,180 +416,46 @@
     
 	<div>
   
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
 </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yun Jiao">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/v.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yun Jiao's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T17:32:32+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kotlin/" itemprop="url" rel="index">
-                    <span itemprop="name">Kotlin</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
           
-
-          
-
-          
-          
-             <span id="/2017/09/05/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-	<div>
-  
-</div>
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/05/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
       
     </footer>
   </div>
@@ -596,10 +465,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -607,6 +477,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -627,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -713,6 +596,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本类型"><span class="nav-number">1.</span> <span class="nav-text">基本类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#显式类型转换"><span class="nav-number">1.1.</span> <span class="nav-text">显式类型转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符类型"><span class="nav-number">1.2.</span> <span class="nav-text">字符类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组"><span class="nav-number">1.3.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串"><span class="nav-number">1.4.</span> <span class="nav-text">字符串</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -861,6 +760,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
 
   
 
