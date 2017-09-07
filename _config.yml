@@ -81,3 +81,8 @@ deploy:
   repo: https://github.com/jiaoyun286/jiaoyun286.github.io.git
   branch: master
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
+  
+admin:
+  username: yunjiao
+  password_hash: $2a$10$cNlmxYTUVkZVYny6uq7rp.W4oYR9lmi0.riCAnTaG/oasn2Xx0exS
+  secret: jiaoyun286@126.com
