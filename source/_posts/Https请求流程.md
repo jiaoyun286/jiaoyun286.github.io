@@ -7,7 +7,7 @@ categories: 通用
 ![https|center](http://ovycuxkwi.bkt.clouddn.com/https.webp.jpg)
 <!-- more -->
 #### 流程说明
-1. clent发送请求
+1. client发送请求
 2. server收到请求，并自己生存一对秘钥,即**公钥S**和**私钥S**
 3. server把生成的**公钥S**传递给client
 4. client收到公钥后判断，若无效，弹出警告，否则生成一串随机数，即**私钥C**，然后client用server传过来的**公钥S**对该随机数加密，形成【私钥C】
