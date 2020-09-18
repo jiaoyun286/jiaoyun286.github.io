@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kotlin," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Kotlin提供一个不需要继承就可以向一个类扩展新功能的能力，支持扩展函数和扩展属性。 扩展函数函数名前加前缀，表示函数的接收者类型，也就是要扩展的的对象类型。下面的例子就是MutableList&amp;lt;Int&amp;gt;类型添加了一个swap函数：12345fun MutableList&amp;lt;Int&amp;gt;.swap(index1: Int, index2: Int) &amp;#123;    val">
+<meta name="keywords" content="Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="扩展">
+<meta property="og:url" content="http://yundeveloper.top/2017/11/06/扩展/index.html">
+<meta property="og:site_name" content="Yun Jiao&#39;s Blog">
+<meta property="og:description" content="Kotlin提供一个不需要继承就可以向一个类扩展新功能的能力，支持扩展函数和扩展属性。 扩展函数函数名前加前缀，表示函数的接收者类型，也就是要扩展的的对象类型。下面的例子就是MutableList&amp;lt;Int&amp;gt;类型添加了一个swap函数：12345fun MutableList&amp;lt;Int&amp;gt;.swap(index1: Int, index2: Int) &amp;#123;    val">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-18T11:27:16.132Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="扩展">
+<meta name="twitter:description" content="Kotlin提供一个不需要继承就可以向一个类扩展新功能的能力，支持扩展函数和扩展属性。 扩展函数函数名前加前缀，表示函数的接收者类型，也就是要扩展的的对象类型。下面的例子就是MutableList&amp;lt;Int&amp;gt;类型添加了一个swap函数：12345fun MutableList&amp;lt;Int&amp;gt;.swap(index1: Int, index2: Int) &amp;#123;    val">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"right","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yundeveloper.top/2017/11/06/扩展/"/>
+
+
+
+
+
+  <title>扩展 | Yun Jiao's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/jiaoyun286"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yun Jiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yundeveloper.top/2017/11/06/扩展/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yun Jiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/v.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yun Jiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">扩展</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T14:24:57+08:00">
+                2017-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程语言/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/11/06/扩展/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/11/06/扩展/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/11/06/扩展/" class="leancloud_visitors" data-flag-title="扩展">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">热度
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Kotlin提供一个不需要继承就可以向一个类扩展新功能的能力，支持<strong>扩展函数</strong>和<strong>扩展属性</strong>。</p>
+<h4 id="扩展函数"><a href="#扩展函数" class="headerlink" title="扩展函数"></a>扩展函数</h4><p>函数名前加前缀，表示函数的<em>接收者类型</em>，也就是要扩展的的对象类型。下面的例子就是<code>MutableList&lt;Int&gt;</code>类型添加了一个<code>swap</code>函数：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> MutableList<span class="type">&lt;Int&gt;</span>.<span class="title">swap</span><span class="params">(index1: <span class="type">Int</span>, index2: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">val</span> tmp = <span class="keyword">this</span>[index1] <span class="comment">// 'this' 指代 list 实例</span></div><div class="line">    <span class="keyword">this</span>[index1] = <span class="keyword">this</span>[index2]</div><div class="line">    <span class="keyword">this</span>[index2] = tmp</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在扩展函数内，<code>this</code>关键字代表接收者类型的对象。<br>扩展函数的调用：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> l = mutableListOf(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line">l.swap(<span class="number">0</span>,<span class="number">2</span>)<span class="comment">//swap函数内部的this将指向l的实例</span></div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h4 id="扩展函数是静态解析的"><a href="#扩展函数是静态解析的" class="headerlink" title="扩展函数是静态解析的"></a>扩展函数是静态解析的</h4><p>扩展函数并未对要扩展的类插入任何成员，只是创建了一个新的函数，并且接收者类型的实例可以用点操作符调用这个新函数。<br>扩展函数的调用派发过程是静态的，它并不是接收者类型的虚拟成员，调用函数时，具体被调用的函数是哪个，是通过调用函数的对象表达式的类型决定，而不是在运行时表达式动态计算的最终结果决定的。</p>
+<blockquote>
+<p>其实，上面说的意思就是具体调用的是哪个函数，是由对象声明的引用的类型决定的，不是由对象的实际类型决定的。这刚好与多态中的运行时由对象的实际类型决定的动态绑定相反。<br>如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span></span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>: <span class="type">C</span></span>()</div><div class="line"><span class="function"><span class="keyword">fun</span> C.<span class="title">foo</span><span class="params">()</span></span> = <span class="string">"c"</span></div><div class="line"><span class="function"><span class="keyword">fun</span> D.<span class="title">foo</span><span class="params">()</span></span> = <span class="string">"d"</span></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">printFoo</span><span class="params">(c: <span class="type">C</span>)</span></span>&#123;</div><div class="line">	println(c.foo())</div><div class="line">&#125;</div><div class="line">printFoo(D())<span class="comment">//打印结果是c，调用的函数由函数声明中参数的类型决定</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>如果一个类中存在成员函数与扩展函数的签名相同时（同名、同参数序列），这种情况<strong>总是优先调用成员函数</strong>。如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">()</span></span> &#123; println(<span class="string">"member"</span>) &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> C.<span class="title">foo</span><span class="params">()</span></span> &#123; println(<span class="string">"extension"</span>) &#125;</div></pre></td></tr></table></figure></p>
+<p>如果我们对象<code>C</code>类型的变量<code>c</code>调用<code>c.foo()</code>，结果会打印<code>member</code>，即只有成员函数被调用。可以通过<strong>重载</strong>来避免这种情况。</p>
+<h4 id="可为空的接收者"><a href="#可为空的接收者" class="headerlink" title="可为空的接收者"></a>可为空的接收者</h4><p>对可以为空的接收者类型也可以定义扩展，这样的扩展函数，即使调用的对象变量值为null是也可以调用，在扩展函数内部，可以通过<code>this == null</code>来检查对象是否为空。Kotlin中允许你调用<code>toString()</code>函数，而不必检查对象是否为null，就是通过这个原理实现：对象是否为Null的检查发生在函数内部，因此调用者不必检查。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> Any?.<span class="title">toString</span><span class="params">()</span></span>: String &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == <span class="literal">null</span>) <span class="keyword">return</span> <span class="string">"null"</span></div><div class="line">    <span class="comment">// 进行过 null 检查后, 'this' 会被自动转换为非 null 类型, 因此下面的 toString() 方法</span></div><div class="line">    <span class="comment">// 会被解析为 Any 类的成员函数</span></div><div class="line">    <span class="keyword">return</span> toString()</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="扩展属性"><a href="#扩展属性" class="headerlink" title="扩展属性"></a>扩展属性</h4><p>与扩展函数类似，Kotlin也支持扩展属性：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> &lt;T&gt; List&lt;T&gt;.lastIndex:<span class="built_in">Int</span></div><div class="line">	<span class="keyword">get</span>() = size - <span class="number">1</span></div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>由于扩展属性实际上不会向类添加新的成员，因此无法让一个扩展属性有一个<em>后端域变量</em>，所以，<strong>扩展属性不允许存在初始化器</strong>，扩展属性的行为只能通过明确给定的取值方法与设置方法来定义。</p>
+</blockquote>
+<p>如下面是错误的：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> Foo.<span class="keyword">var</span> = <span class="number">1</span> <span class="comment">//错误：扩展属性不允许有初始化器</span></div></pre></td></tr></table></figure></p>
+<h4 id="对伴生对象的扩展"><a href="#对伴生对象的扩展" class="headerlink" title="对伴生对象的扩展"></a>对伴生对象的扩展</h4><p>如果一个类定义了伴生对象，同样可以对伴生对象定义扩展函数和扩展属性。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>&#123;</div><div class="line">	<span class="keyword">companion</span> <span class="keyword">object</span> &#123;&#125; <span class="comment">//通过"Companion"来引用这个伴生对象</span></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">fun</span> MyClass.Companion.<span class="title">foo</span><span class="params">()</span></span>&#123;<span class="comment">//这里就像把伴生对象的类型当作了"Companicon"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>伴生对象扩展函数的调用与常规成员一样，可以只使用类名限定符来调用这些扩展函数和扩展属性：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MyClass.foo()</div></pre></td></tr></table></figure></p>
+<h4 id="扩展的范围"><a href="#扩展的范围" class="headerlink" title="扩展的范围"></a>扩展的范围</h4><p><strong>扩展定义在哪里？</strong><br>大多数时候我们会在顶级位置定义扩展，也就是在包名一个级别的位置定义。如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> foo.bar</div><div class="line"><span class="function"><span class="keyword">fun</span> Baz.<span class="title">goo</span><span class="params">()</span></span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>如何使用到别的地方定义的扩展？</strong><br>要在扩展定义的包之外使用扩展，我们只需要导入扩展定义所在的包：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.usage</div><div class="line"></div><div class="line"><span class="keyword">import</span> foo.bar.goo <span class="comment">// 通过名称 "goo" 来导入扩展</span></div><div class="line">                   <span class="comment">// 或者</span></div><div class="line"><span class="keyword">import</span> foo.bar.*   <span class="comment">// 导入 "foo.bar" 包之下的全部内容</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">usage</span><span class="params">(baz: <span class="type">Baz</span>)</span></span> &#123;</div><div class="line">    baz.goo()</div><div class="line">)</div></pre></td></tr></table></figure></p>
+<h4 id="在类的成员位置定义扩展"><a href="#在类的成员位置定义扩展" class="headerlink" title="在类的成员位置定义扩展"></a>在类的成员位置定义扩展</h4><p>在类的内部，你同样可以为另一个类定义扩展。在扩展中，存在多个<code>隐含接收者</code>- 这些隐含接收者的成员可以不使用限定符直接访问，就像调用类中的其他成员一样。扩展方法定义所在的类的实例，称为<strong>派发接收者</strong>，扩展方法的目标类型的实例，称为<strong>扩展接收者</strong>.<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">bar</span><span class="params">()</span></span> &#123; ... &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">baz</span><span class="params">()</span></span> &#123; ... &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> D.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        bar()   <span class="comment">// 这里将会调用 D.bar</span></div><div class="line">        baz()   <span class="comment">// 这里将会调用 C.baz</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">caller</span><span class="params">(d: <span class="type">D</span>)</span></span> &#123;</div><div class="line">        d.foo()   <span class="comment">// 这里将会调用扩展函数</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当派发接收者和扩展接收者成员名称发生冲突时，扩展接收者的成员将会被优先调用。如果想要调用派发接收者的成员，可以使用带限定符的this语法。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">fun</span> D.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        toString()         <span class="comment">// 这里将会调用 D.toString()</span></div><div class="line">        <span class="keyword">this</span><span class="symbol">@C</span>.toString()  <span class="comment">// 这里将会调用 C.toString()</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>定义在类成员位置的扩展，添加<code>open</code>关键字可以在子类中被覆盖，而在调用中，实际调用的扩展函数是由对象的实际类型决定。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">D</span> </span>&#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D1</span> : <span class="type">D</span></span>() &#123;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">open</span> <span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;</div><div class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> D.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        println(<span class="string">"D.foo in C"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">open</span> <span class="function"><span class="keyword">fun</span> D1.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        println(<span class="string">"D1.foo in C"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">fun</span> <span class="title">caller</span><span class="params">(d: <span class="type">D</span>)</span></span> &#123;</div><div class="line">        d.foo()   <span class="comment">// 调用扩展函数</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C1</span> : <span class="type">C</span></span>() &#123;</div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> D.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        println(<span class="string">"D.foo in C1"</span>)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> D1.<span class="title">foo</span><span class="params">()</span></span> &#123;</div><div class="line">        println(<span class="string">"D1.foo in C1"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">C().caller(D())   <span class="comment">// 打印结果为 "D.foo in C"</span></div><div class="line">C1().caller(D())  <span class="comment">// 打印结果为 "D.foo in C1" - 派发接受者的解析过程是虚拟的</span></div><div class="line">C().caller(D1())  <span class="comment">// 打印结果为 "D.foo in C" - 扩展接受者的解析过程是静态的</span></div></pre></td></tr></table></figure></p>
+<h4 id="使用扩展的动机"><a href="#使用扩展的动机" class="headerlink" title="使用扩展的动机"></a>使用扩展的动机</h4><p>在java中我们为了很方便的复用一些工具方法，我们会定义各种<code>utils</code>类，声明一些静态的工具方法，通过类名调用。如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Collections.swap(list, Collections.binarySearch(list, Collections.max(otherList)), Collections.max(list))</div></pre></td></tr></table></figure></p>
+<p>可以看到调用过程中反复出现类名，貌似不是那么优雅。<br>扩展方法就是在不改变类的定义情况下，可以让类的对象通过变量名直接调用。<br>  <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">list.swap(list.binarySearch(otherList.max()), list.max())</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/06/接口/" rel="next" title="接口">
+                <i class="fa fa-chevron-left"></i> 接口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/v.jpg"
+              alt="Yun Jiao" />
+          
+            <p class="site-author-name" itemprop="name">Yun Jiao</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jiaoyun286" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/aca0af1abb0d" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>简书</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展函数"><span class="nav-number">1.</span> <span class="nav-text">扩展函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展函数是静态解析的"><span class="nav-number">2.</span> <span class="nav-text">扩展函数是静态解析的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可为空的接收者"><span class="nav-number">3.</span> <span class="nav-text">可为空的接收者</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展属性"><span class="nav-number">4.</span> <span class="nav-text">扩展属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对伴生对象的扩展"><span class="nav-number">5.</span> <span class="nav-text">对伴生对象的扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展的范围"><span class="nav-number">6.</span> <span class="nav-text">扩展的范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在类的成员位置定义扩展"><span class="nav-number">7.</span> <span class="nav-text">在类的成员位置定义扩展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用扩展的动机"><span class="nav-number">8.</span> <span class="nav-text">使用扩展的动机</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yun Jiao</span>
+
+  
+</div>
+
+
+ <!-- <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytcDGw38';
+      var conf = 'e2b49aefaa343b285a143fe4d9897acf';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("o0Bzw2LewUCLedzXsyNXdDki-gzGzoHsz", "2yWdmfKQTsrQ13fu8hmlsM1B");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

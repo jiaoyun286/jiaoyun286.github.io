@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.useso.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kotlin," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="什么是属性？实际是指getter和setter方法，虽然和字段是两个概念，姑且可以理解为有getter和setter方法的字段。如何声明？完整语法：123var 属性名: &amp;lt;属性类型&amp;gt; [= &amp;lt;初始化器&amp;gt;]    [&amp;lt;getter&amp;gt;]    [&amp;lt;setter&amp;gt;] 其中的初始化器（被lateinit关键字修饰时）、getter和setter方法是可选的">
+<meta name="keywords" content="Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="属性和域">
+<meta property="og:url" content="http://yundeveloper.top/2017/11/06/属性和域/index.html">
+<meta property="og:site_name" content="Yun Jiao&#39;s Blog">
+<meta property="og:description" content="什么是属性？实际是指getter和setter方法，虽然和字段是两个概念，姑且可以理解为有getter和setter方法的字段。如何声明？完整语法：123var 属性名: &amp;lt;属性类型&amp;gt; [= &amp;lt;初始化器&amp;gt;]    [&amp;lt;getter&amp;gt;]    [&amp;lt;setter&amp;gt;] 其中的初始化器（被lateinit关键字修饰时）、getter和setter方法是可选的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-09-18T11:27:16.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="属性和域">
+<meta name="twitter:description" content="什么是属性？实际是指getter和setter方法，虽然和字段是两个概念，姑且可以理解为有getter和setter方法的字段。如何声明？完整语法：123var 属性名: &amp;lt;属性类型&amp;gt; [= &amp;lt;初始化器&amp;gt;]    [&amp;lt;getter&amp;gt;]    [&amp;lt;setter&amp;gt;] 其中的初始化器（被lateinit关键字修饰时）、getter和setter方法是可选的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.2',
+    sidebar: {"position":"right","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yundeveloper.top/2017/11/06/属性和域/"/>
+
+
+
+
+
+  <title>属性和域 | Yun Jiao's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/jiaoyun286"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yun Jiao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yundeveloper.top/2017/11/06/属性和域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yun Jiao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/v.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yun Jiao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">属性和域</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T14:04:32+08:00">
+                2017-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/编程语言/" itemprop="url" rel="index">
+                    <span itemprop="name">编程语言</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/11/06/属性和域/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/11/06/属性和域/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+             <span id="/2017/11/06/属性和域/" class="leancloud_visitors" data-flag-title="属性和域">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">热度
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>℃
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>什么是属性？</strong><br>实际是指getter和setter方法，虽然和字段是两个概念，姑且可以理解为有getter和setter方法的字段。<br><strong>如何声明？</strong><br>完整语法：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> 属性名: &lt;属性类型&gt; [= &lt;初始化器&gt;]</div><div class="line">    [&lt;getter&gt;]</div><div class="line">    [&lt;setter&gt;]</div></pre></td></tr></table></figure></p>
+<p>其中的初始化器（被<code>lateinit</code>关键字修饰时）、getter和setter方法是可选的。如果没有自定义getter和setter的实现，就会使用默认的。<br>以下两种情况属性类型也可省略：</p>
+<ol>
+<li>可以通过初始化器推断出来</li>
+<li>可以被声明属性覆盖基类属性的类型推断出来<a id="more"></a>
+<strong>两种属性：</strong><br>只读属性：<code>val</code>关键字声明<br>可变属性：<code>var</code>关键字声明<br><strong>访问属性：</strong><br>访问属性使用点操作符，<code>对象名.属性名</code>，如：<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> person = Person()</div><div class="line">person.name = <span class="string">"张三"</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>和oc一样，点操作符内部的实现也是调用getter或setter访问器。并且在Kotlin中访问Java的属性时，仍然可以用点语法访问Java对象中的属性。</p>
+</blockquote>
+<p><em>如果要修改访问器的可见性或添加注解，但又不需要修改默认实现，你可以重新定义方法，但不定义它的实现，这样仍然是使用默认实现。</em>如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> setterVisibility: String = <span class="string">"abc"</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">set</span> <span class="comment">// 设值方法的可见度为 private, 并使用默认实现</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> setterWithAnnotation: Any? = <span class="literal">null</span></div><div class="line">    <span class="meta">@Inject</span> <span class="keyword">set</span> <span class="comment">// 对设值方法添加 Inject 注解</span></div></pre></td></tr></table></figure></p>
+<h4 id="属性的后端域变量（Backing-Field）"><a href="#属性的后端域变量（Backing-Field）" class="headerlink" title="属性的后端域变量（Backing Field）"></a>属性的后端域变量（Backing Field）</h4><p>Kotlin类不能拥有域变量（也就是Java中的成员变量），但是使用访问器时又需要这种域变量，所以Kotlin提供了后端域变量，可以用<code>field</code>标识符来访问。<br>如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> counter = <span class="number">0</span> <span class="comment">// 初始化给定的值将直接写入后端域变量中</span></div><div class="line">    <span class="keyword">set</span>(value) &#123;</div><div class="line">        <span class="keyword">if</span> (value &gt;= <span class="number">0</span>) field = value</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>field</code>就代表编译器自动生成的后端域变量，并且只允许在属性访问器中使用</p>
+</blockquote>
+<p><strong>什么情况下会生成后端域变量？</strong></p>
+<ol>
+<li>访问器中任一个使用默认实现</li>
+<li>自定义的访问器中通过<code>field</code>关键字访问属性</li>
+</ol>
+<p>下面这种情况下就不会生成后端域变量：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> isEmpty: <span class="built_in">Boolean</span></div><div class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>.size() == <span class="number">0</span> <span class="comment">//自定义访问器没有使用field关键字访问属性</span></div></pre></td></tr></table></figure></p>
+<p><strong>为什么不用<code>this</code>关键字访问属性呢？</strong><br>试想下，<code>this</code>代表当前对象，而上面说过通过点操作符，访问属性时，实际上是调用了访问器，在访问器内部实现中再调用访问器就会出现无限递归。所以，通过Backing Filed可以避免这个问题。</p>
+<h4 id="后端属性（Backing-Property）"><a href="#后端属性（Backing-Property）" class="headerlink" title="后端属性（Backing Property）"></a>后端属性（Backing Property）</h4><p>如果你的操作是想访问属性内部的属性，或者集合里面的元素，而不是属性本身，那么你可以声明这个属性为<code>private</code>的（后端属性），然后定义个<code>public</code>的属性并自定义其访问器，在自定义的访问器内部访问后端属性。如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">var</span> _table: Map&lt;String, <span class="built_in">Int</span>&gt;? = <span class="literal">null</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">val</span> table: Map&lt;String, <span class="built_in">Int</span>&gt;</div><div class="line">    <span class="keyword">get</span>() &#123;</div><div class="line">        <span class="comment">// 这里的操作不希望属于 backing filed，</span></div><div class="line">        <span class="keyword">if</span> (_table == <span class="literal">null</span>) &#123;</div><div class="line">            _table = HashMap()</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> _table ?: <span class="keyword">throw</span> AssertionError(<span class="string">"Set to null by another thread"</span>)</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>其实也没有什么神秘的，其实就像Java中我们通常写的，在访问私有属性时，在自定义访问器中添加些限制，避免取到或设置非法的值一个道理。只是在Kotlin中取了个高大上的名字。</p>
+</blockquote>
+<h4 id="编译器常数值"><a href="#编译器常数值" class="headerlink" title="编译器常数值"></a>编译器常数值</h4><p>值在编译期就能确定的属性，用<code>const</code>关键字修饰。满足以下条件的属性可以标记为编译器常数值：</p>
+<ol>
+<li>必须是顶级属性或是<code>object</code>的成员</li>
+<li>值必须是<code>String</code>或基本类型</li>
+<li>不能自定义取值方法</li>
+</ol>
+<p>如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const <span class="keyword">val</span> SUBSYSTEM_DEPRECATED: String = <span class="string">"This subsystem is deprecated"</span></div></pre></td></tr></table></figure></p>
+<p>编译器常数值可以用在注解内：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Deprecated(SUBSYSTEM_DEPRECATED)</span> <span class="function"><span class="keyword">fun</span> <span class="title">foo</span><span class="params">()</span></span> &#123; ... &#125;</div></pre></td></tr></table></figure></p>
+<h4 id="延迟初始化属性"><a href="#延迟初始化属性" class="headerlink" title="延迟初始化属性"></a>延迟初始化属性</h4><p>通常属性被声明为非<code>null</code>类型就必须就地初始化。但是，这种限制在很多情况下是不方便的，比如，声明的属性通过依赖注入的方式来初始化。这种情况下，你就可以使用<code>lateinit</code>关键字来修饰声明的属性。<br>如：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyTest</span> </span>&#123;</div><div class="line">    <span class="keyword">lateinit</span> <span class="keyword">var</span> subject: TestSubject</div><div class="line"></div><div class="line">    <span class="meta">@SetUp</span> <span class="function"><span class="keyword">fun</span> <span class="title">setup</span><span class="params">()</span></span> &#123;</div><div class="line">        subject = TestSubject()</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span> <span class="function"><span class="keyword">fun</span> <span class="title">test</span><span class="params">()</span></span> &#123;</div><div class="line">        subject.method()  <span class="comment">// 直接访问属性</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>使用限制：</strong></p>
+<ol>
+<li>只能用于<code>var</code>属性</li>
+<li>只能用于类体内声明的属性</li>
+<li>属性不能有自定义访问器</li>
+<li>属性必须是非<code>null</code>的</li>
+<li>属性不能是基本类型</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+  
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+  
+</div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/06/控制流/" rel="next" title="控制流">
+                <i class="fa fa-chevron-left"></i> 控制流
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/06/字符串/" rel="prev" title="字符串">
+                字符串 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/v.jpg"
+              alt="Yun Jiao" />
+          
+            <p class="site-author-name" itemprop="name">Yun Jiao</p>
+            <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jiaoyun286" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/aca0af1abb0d" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-globe"></i>简书</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性的后端域变量（Backing-Field）"><span class="nav-number">1.</span> <span class="nav-text">属性的后端域变量（Backing Field）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后端属性（Backing-Property）"><span class="nav-number">2.</span> <span class="nav-text">后端属性（Backing Property）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译器常数值"><span class="nav-number">3.</span> <span class="nav-text">编译器常数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延迟初始化属性"><span class="nav-number">4.</span> <span class="nav-text">延迟初始化属性</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yun Jiao</span>
+
+  
+</div>
+
+
+ <!-- <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.2</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytcDGw38';
+      var conf = 'e2b49aefaa343b285a143fe4d9897acf';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("o0Bzw2LewUCLedzXsyNXdDki-gzGzoHsz", "2yWdmfKQTsrQ13fu8hmlsM1B");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
